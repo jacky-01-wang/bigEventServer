@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./tools/user.js"></script>
 </head>
 
 <body>
@@ -51,17 +52,13 @@ $('.input_sub').on("click", function () {
     if (username==''||password=='') {
         alert("请输入账号或密码")
     }
-    $.ajax({
-        type:"post",
-        url:'http://localhost:8000/admin/login',
-        data:{user_name:username,password:password},
-        success: function (res) {
-            if (res.code==200) {
-                location.href='./index.html'
-
-            }else{
-                alert('网络不好，请稍后再试')
-            }
+    user.login({
+        data:{username:username,password:password},
+        success: function () {
+            location.href='./index.html'
+        },
+        fail: function () {
+            alert("网络不好，请稍后再试")
         }
     })
 })
